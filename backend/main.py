@@ -119,7 +119,7 @@ async def upload_file(file: UploadFile = File(...)):
 
     # Current local URL
     url = (
-        f"http://127.0.0.1:8000"
+        f"https://ms-fileqr-api.onrender.com"
         f"/files/{filename}"
     )
 

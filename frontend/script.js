@@ -316,7 +316,7 @@ async function generateQR() {
         // =====================================
 
         const response = await fetch(
-            "http://127.0.0.1:8000/upload",
+            "https://ms-fileqr-api.onrender.com",
             {
                 method: "POST",
                 body: formData
