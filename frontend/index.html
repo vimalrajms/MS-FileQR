@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#050509">
+
+    <title>MS FileQR</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="grid-bg"></div>
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <div class="brand">
+            <div class="brand-icon">MS</div>
+
+            <span>
+                FILE<span>QR</span>
+            </span>
+        </div>
+
+        <div class="status">
+            <i></i>
+            SYSTEM ONLINE
+        </div>
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="container">
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="badge">
+                ⚡ FAST • PRIVATE • SIMPLE
+            </div>
+
+            <h1>
+                Share Files.<br>
+                <span>Scan. Done.</span>
+            </h1>
+
+            <p>
+                Upload an image or video and instantly generate
+                a shareable URL and QR code.
+            </p>
+
+        </section>
+
+
+        <!-- UPLOAD CARD -->
+        <section class="upload-card">
+
+            <!-- DROP ZONE -->
+            <div id="dropZone" class="drop-zone">
+
+                <div class="upload-icon">
+                    ↑
+                </div>
+
+                <h2>
+                    Drop your file here
+                </h2>
+
+                <p>
+                    or click below to browse your device
+                </p>
+
+                <label
+                    class="browse-btn"
+                    for="fileInput"
+                >
+                    Choose File
+                </label>
+
+                <input
+                    id="fileInput"
+                    type="file"
+                    accept="image/*,video/*"
+                    hidden
+                >
+
+                <div class="formats">
+                    IMAGE &nbsp;•&nbsp; VIDEO
+                </div>
+
+            </div>
+
+
+            <!-- PREVIEW -->
+            <div
+                id="previewBox"
+                class="preview-box hidden"
+            >
+
+                <div class="file-preview">
+
+                    <div id="previewMedia"></div>
+
+                    <div class="file-info">
+
+                        <strong id="fileName">
+                            filename
+                        </strong>
+
+                        <span id="fileSize">
+                            0 MB
+                        </span>
+
+                    </div>
+
+                    <button
+                        id="removeBtn"
+                        class="remove-btn"
+                        type="button"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <button
+                    id="uploadBtn"
+                    class="generate-btn"
+                    type="button"
+                >
+                    <span>
+                        GENERATE QR
+                    </span>
+
+                    <b>
+                        →
+                    </b>
+                </button>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+            <div
+                id="progressBox"
+                class="progress-box hidden"
+            >
+
+                <div class="progress-header">
+
+                    <span>
+                        Uploading...
+                    </span>
+
+                    <strong id="progressText">
+                        0%
+                    </strong>
+
+                </div>
+
+                <div class="progress-track">
+
+                    <div
+                        id="progressBar"
+                        style="width:0%"
+                    ></div>
+
+                </div>
+
+                <small>
+                    Preparing your secure file link
+                </small>
+
+            </div>
+
+        </section>
+
+
+        <!-- RESULT -->
+        <section
+            id="resultBox"
+            class="result-card hidden"
+        >
+
+            <div class="result-header">
+
+                <div>
+                    <span class="success-dot"></span>
+                    FILE READY
+                </div>
+
+            </div>
+
+
+            <div class="result-content">
+
+                <!-- QR -->
+                <div class="qr-wrapper">
+
+                    <div id="qrCode"></div>
+
+                </div>
+
+
+                <!-- RESULT INFO -->
+                <div class="result-info">
+
+                    <h3>
+                        Your QR Code is ready
+                    </h3>
+
+
+                    <div class="url-box">
+
+                        <span id="fileUrl">
+                            File URL
+                        </span>
+
+                        <button
+                            id="copyBtn"
+                            type="button"
+                        >
+                            COPY
+                        </button>
+
+                    </div>
+
+
+                    <div class="actions">
+
+                        <button
+                            id="downloadBtn"
+                            type="button"
+                        >
+                            ↓ Download QR
+                        </button>
+
+                        <button
+                            id="shareBtn"
+                            type="button"
+                        >
+                            ↗ Share
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FEATURES -->
+        <section class="features">
+
+            <div class="feature">
+
+                <span>01</span>
+
+                <div>
+                    <h3>Upload</h3>
+                    <p>Select an image or video.</p>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>02</span>
+
+                <div>
+                    <h3>Generate</h3>
+                    <p>Get your unique URL.</p>
+                </div>
+
+            </div>
+
+
+            <div class="feature">
+
+                <span>03</span>
+
+                <div>
+                    <h3>Share</h3>
+                    <p>Scan and open anywhere.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <span>
+            © 2026 MS FILEQR
+        </span>
+
+        <span>
+            Built by VIMAL MS
+        </span>
+
+    </footer>
+
+
+    <!-- DEBUG PANEL -->
+    <div
+        id="debugBox"
+        style="
+            position:fixed;
+            left:10px;
+            right:10px;
+            bottom:10px;
+            z-index:99999;
+            background:#050505;
+            color:#00ff88;
+            border:1px solid #00ff88;
+            padding:15px;
+            border-radius:10px;
+            font-family:monospace;
+            font-size:13px;
+            max-height:180px;
+            overflow:auto;
+        "
+    >
+        DEBUG: Ready
+    </div>
+
+
+    <!-- DEBUG FUNCTION -->
+    <script>
+        const debugBox = document.getElementById("debugBox");
+
+        function debug(message) {
+            debugBox.innerHTML += "<br>" + message;
+            debugBox.scrollTop = debugBox.scrollHeight;
+        }
+    </script>
+
+
+    <!-- QR LIBRARY -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+
+
+    <!-- APP SCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+</html>
