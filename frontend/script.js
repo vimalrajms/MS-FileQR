@@ -316,12 +316,12 @@ async function generateQR() {
         // =====================================
 
         const response = await fetch(
-            "https://ms-fileqr-api.onrender.com",
-            {
-                method: "POST",
-                body: formData
-            }
-        );
+    "https://ms-fileqr-api.onrender.com/upload",
+    {
+        method: "POST",
+        body: formData
+    }
+);
 
 
         console.log("Backend status:", response.status);
