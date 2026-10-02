@@ -598,21 +598,63 @@ async function copyURL() {
 if (downloadBtn) {
 
     downloadBtn.addEventListener("click", () => {
-    const qr = document.querySelector(".qr-wrapper");
+    const qrCanvas = document.querySelector(".qr-wrapper canvas");
+    const qrImg = document.querySelector(".qr-wrapper img");
 
-    if (!qr) return;
+    if (!qrCanvas && !qrImg) {
+        alert("QR code not ready.");
+        return;
+    }
 
-    html2canvas(qr, {
-        backgroundColor: "#ffffff",
-        scale: 3
-    }).then(canvas => {
+    const qrSize = 220;
+    const padding = 24;
+    const border = 4;
+
+    const totalSize = qrSize + (padding * 2);
+
+    const canvas = document.createElement("canvas");
+    canvas.width = totalSize;
+    canvas.height = totalSize;
+
+    const ctx = canvas.getContext("2d");
+
+    // White background
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, totalSize, totalSize);
+
+    // Green border
+    ctx.strokeStyle = "#00ff9d";
+    ctx.lineWidth = border;
+    ctx.strokeRect(
+        border / 2,
+        border / 2,
+        totalSize - border,
+        totalSize - border
+    );
+
+    const drawQR = (source) => {
+        ctx.drawImage(
+            source,
+            padding,
+            padding,
+            qrSize,
+            qrSize
+        );
+
         const link = document.createElement("a");
-
         link.download = "MS-FileQR.png";
         link.href = canvas.toDataURL("image/png");
-
         link.click();
-    });
+    };
+
+    if (qrCanvas) {
+        drawQR(qrCanvas);
+    } else {
+        const img = new Image();
+
+        img.onload = () => drawQR(img);
+        img.src = qrImg.src;
+    }
 });
 
 }
