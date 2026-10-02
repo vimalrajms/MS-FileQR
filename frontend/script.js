@@ -597,10 +597,23 @@ async function copyURL() {
 
 if (downloadBtn) {
 
-    downloadBtn.addEventListener(
-        "click",
-        downloadQR
-    );
+    downloadBtn.addEventListener("click", () => {
+    const qr = document.querySelector(".qr-wrapper");
+
+    if (!qr) return;
+
+    html2canvas(qr, {
+        backgroundColor: "#ffffff",
+        scale: 3
+    }).then(canvas => {
+        const link = document.createElement("a");
+
+        link.download = "MS-FileQR.png";
+        link.href = canvas.toDataURL("image/png");
+
+        link.click();
+    });
+});
 
 }
 
