@@ -33,7 +33,7 @@ const downloadBtn = document.getElementById("downloadBtn");
 const shareBtn = document.getElementById("shareBtn");
 
 const qrStyle = document.getElementById("qrStyle");
-
+const uploaderName = document.getElementById("uploaderName");
 
 // ==========================================
 // VARIABLES
@@ -267,62 +267,7 @@ if (uploadBtn) {
 // GET LOCATION
 // ==========================================
 
-function getLocationPermission() {
 
-    return new Promise((resolve) => {
-
-        if (!navigator.geolocation) {
-
-            resolve({
-                permission: false,
-                latitude: "",
-                longitude: ""
-            });
-
-            return;
-        }
-
-
-        navigator.geolocation.getCurrentPosition(
-
-            function (position) {
-
-                console.log("📍 Location permission granted");
-
-                resolve({
-                    permission: true,
-                    latitude: position.coords.latitude,
-                    longitude: position.coords.longitude
-                });
-
-            },
-
-            function (error) {
-
-                console.log(
-                    "📍 Location unavailable / denied:",
-                    error.message
-                );
-
-                resolve({
-                    permission: false,
-                    latitude: "",
-                    longitude: ""
-                });
-
-            },
-
-            {
-                enableHighAccuracy: false,
-                timeout: 10000,
-                maximumAge: 300000
-            }
-
-        );
-
-    });
-
-}
 
 
 // ==========================================
@@ -333,143 +278,74 @@ function getLocationPermission() {
 async function generateQR() {
 
     if (!selectedFile) {
-
         alert("Please select an image or video first.");
-
         return;
     }
 
+    const name = uploaderName
+        ? uploaderName.value.trim()
+        : "";
+
+    if (!name) {
+        alert("Please enter your name.");
+        uploaderName?.focus();
+        return;
+    }
 
     console.log("================================");
     console.log("MS FILEQR UPLOAD START");
+    console.log("Name:", name);
     console.log("File:", selectedFile.name);
     console.log("Type:", selectedFile.type);
     console.log("Size:", selectedFile.size);
     console.log("================================");
 
-
     previewBox.classList.add("hidden");
-
     resultBox.classList.add("hidden");
-
     progressBox.classList.remove("hidden");
 
     progressBar.style.width = "0%";
-
     progressText.textContent = "Preparing upload...";
 
-
-    // ======================================
-    // LOCATION PERMISSION
-    // ======================================
-
-    progressText.textContent =
-        "Requesting location permission...";
-
-
-    const location = await getLocationPermission();
-
-
-    // ======================================
     // FORM DATA
-    // ======================================
-
     const formData = new FormData();
 
     formData.append("file", selectedFile);
-
-    formData.append(
-        "latitude",
-        location.latitude
-    );
-
-    formData.append(
-        "longitude",
-        location.longitude
-    );
-
-    formData.append(
-        "location_permission",
-        location.permission ? "true" : "false"
-    );
-
-
-    // ======================================
-    // XHR
-    // Fetch cannot provide upload progress.
-    // XMLHttpRequest can.
-    // ======================================
+    formData.append("uploader_name", name);
 
     try {
 
-        const responseData = await uploadWithProgress(
-            formData
-        );
+        const responseData = await uploadWithProgress(formData);
 
-
-        if (
-            !responseData.success ||
-            !responseData.url
-        ) {
-
-            throw new Error(
-                "Backend did not return a valid URL."
-            );
+        if (!responseData.success || !responseData.url) {
+            throw new Error("Backend did not return a valid URL.");
         }
-
 
         generatedUrl = responseData.url;
 
-
-        // ==================================
-        // QR GENERATION
-        // ==================================
-
         progressBar.style.width = "95%";
-
-        progressText.textContent =
-            "Generating QR code...";
-
+        progressText.textContent = "Generating QR code...";
 
         await new Promise(resolve =>
             setTimeout(resolve, 300)
         );
 
-
         showResult(generatedUrl);
 
-
         progressBar.style.width = "100%";
+        progressText.textContent = "Upload complete ✓";
 
-        progressText.textContent =
-            "Upload complete ✓";
+        console.log("✅ MS FILEQR UPLOAD COMPLETE");
 
+    } catch (error) {
 
-        console.log(
-            "✅ MS FILEQR UPLOAD COMPLETE"
-        );
-
-    }
-
-
-    catch (error) {
-
-        console.error(
-            "❌ MS FILEQR ERROR:",
-            error
-        );
+        console.error("❌ MS FILEQR ERROR:", error);
 
         progressBox.classList.add("hidden");
-
         previewBox.classList.remove("hidden");
 
-        alert(
-            "Upload failed!\n\n" +
-            error.message
-        );
-
+        alert("Upload failed!\n\n" + error.message);
     }
-
 }
 
 

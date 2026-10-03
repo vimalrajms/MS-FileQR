@@ -5,6 +5,7 @@ from pathlib import Path
 import os
 import uuid
 
+
 app = FastAPI(title="MS FileQR API")
 
 
@@ -78,12 +79,27 @@ def home():
 async def upload_file(
     request: Request,
     file: UploadFile = File(...),
-
-    # Location permission data
-    latitude: str = Form(""),
-    longitude: str = Form(""),
-    location_permission: str = Form("false")
+    uploader_name: str = Form(...)
 ):
+
+    # =========================
+    # CHECK NAME
+    # =========================
+
+    uploader_name = uploader_name.strip()
+
+    if not uploader_name:
+        raise HTTPException(
+            status_code=400,
+            detail="Please enter your name."
+        )
+
+    if len(uploader_name) > 50:
+        raise HTTPException(
+            status_code=400,
+            detail="Name must be 50 characters or less."
+        )
+
 
     # =========================
     # CHECK FILE TYPE
@@ -121,7 +137,6 @@ async def upload_file(
     # =========================
 
     file_data = await file.read()
-
     size = len(file_data)
 
 
@@ -145,28 +160,11 @@ async def upload_file(
     if forwarded_for:
         ip_address = forwarded_for.split(",")[0].strip()
     else:
-        ip_address = request.client.host if request.client else None
-
-
-    # =========================
-    # LOCATION DATA
-    # =========================
-
-    permission_granted = (
-        location_permission.lower() == "true"
-    )
-
-    lat_value = None
-    lon_value = None
-
-    if permission_granted and latitude and longitude:
-        try:
-            lat_value = float(latitude)
-            lon_value = float(longitude)
-        except ValueError:
-            lat_value = None
-            lon_value = None
-            permission_granted = False
+        ip_address = (
+            request.client.host
+            if request.client
+            else None
+        )
 
 
     # =========================
@@ -185,24 +183,26 @@ async def upload_file(
             },
         )
 
-        # Public URL
+
+        # =========================
+        # PUBLIC URL
+        # =========================
+
         public_url = supabase.storage.from_(
             BUCKET_NAME
         ).get_public_url(filename)
 
 
         # =========================
-        # SAVE UPLOAD DETAILS
+        # SAVE DATABASE
         # =========================
 
         supabase.table("upload_logs").insert({
+            "uploader_name": uploader_name,
             "file_name": file.filename,
             "file_type": file.content_type,
             "file_size": size,
             "ip_address": ip_address,
-            "latitude": lat_value,
-            "longitude": lon_value,
-            "location_permission": permission_granted,
             "file_url": public_url
         }).execute()
 
@@ -216,6 +216,7 @@ async def upload_file(
 
 
     finally:
+
         await file.close()
 
 
@@ -229,8 +230,5 @@ async def upload_file(
         "size": size,
         "type": file.content_type,
         "url": public_url,
-        "ip_address": ip_address,
-        "location_permission": permission_granted,
-        "latitude": lat_value,
-        "longitude": lon_value
+        "uploader_name": uploader_name
     }

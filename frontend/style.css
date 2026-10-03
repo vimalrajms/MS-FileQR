@@ -778,3 +778,308 @@ footer {
         max-width: 180px;
     }
 }
+/* ==========================================
+   MS FILEQR — MASS UPLOADER NAME UI
+   ========================================== */
+
+/* ==========================================
+   MS FILEQR — ANIMATED CYBER NAME BOX
+   ========================================== */
+
+.name-input-box {
+    position: relative;
+    width: 100%;
+    margin-top: 20px;
+    padding: 18px;
+    box-sizing: border-box;
+
+    background: rgba(3, 10, 9, 0.85);
+    border: 1px solid rgba(0, 255, 157, 0.25);
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    animation: nameBoxIn 0.6s ease both;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.name-input-box:hover {
+    transform: translateY(-2px);
+    border-color: rgba(0, 255, 157, 0.55);
+
+    box-shadow:
+        0 0 20px rgba(0, 255, 157, 0.08),
+        inset 0 0 25px rgba(0, 255, 157, 0.03);
+}
+
+
+/* Animated scan line */
+
+.name-input-box::before {
+    content: "";
+
+    position: absolute;
+    left: -100%;
+    top: 0;
+
+    width: 100%;
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #00ff9d,
+        transparent
+    );
+
+    box-shadow: 0 0 12px #00ff9d;
+
+    animation: scanLine 3s linear infinite;
+}
+
+
+/* Moving bottom glow */
+
+.name-input-box::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+
+    width: 35%;
+    height: 2px;
+
+    background: #00ff9d;
+
+    box-shadow:
+        0 0 8px #00ff9d,
+        0 0 18px #00ff9d;
+
+    animation: bottomPulse 2s ease-in-out infinite;
+}
+
+
+/* Label */
+
+.name-input-box label {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    margin-bottom: 11px;
+
+    color: #00ff9d;
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    text-shadow:
+        0 0 8px rgba(0, 255, 157, 0.7);
+
+    animation: labelGlow 2s ease-in-out infinite;
+}
+
+.name-input-box label::before {
+    content: "◉";
+
+    font-size: 9px;
+
+    animation: dotPulse 1.2s ease-in-out infinite;
+}
+
+
+/* Input */
+
+.name-input-box input {
+    position: relative;
+
+    width: 100%;
+    height: 50px;
+
+    box-sizing: border-box;
+
+    padding: 0 16px;
+
+    background: rgba(0, 255, 157, 0.025);
+
+    color: #ffffff;
+
+    border: 1px solid rgba(0, 255, 157, 0.3);
+    border-radius: 10px;
+
+    outline: none;
+
+    font-family: "Inter", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* Placeholder */
+
+.name-input-box input::placeholder {
+    color: #52605b;
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* Input hover */
+
+.name-input-box input:hover {
+    border-color: rgba(0, 255, 157, 0.55);
+
+    background: rgba(0, 255, 157, 0.045);
+}
+
+
+/* Input focus */
+
+.name-input-box input:focus {
+    border-color: #00ff9d;
+
+    background: rgba(0, 255, 157, 0.07);
+
+    box-shadow:
+        0 0 0 2px rgba(0, 255, 157, 0.04),
+        0 0 15px rgba(0, 255, 157, 0.25),
+        0 0 35px rgba(0, 255, 157, 0.08);
+
+    transform: scale(1.01);
+}
+
+.name-input-box input:focus::placeholder {
+    opacity: 0;
+    transform: translateX(10px);
+}
+
+
+/* Cursor */
+
+.name-input-box input {
+    caret-color: #00ff9d;
+}
+
+
+/* Selection */
+
+.name-input-box input::selection {
+    background: #00ff9d;
+    color: #050509;
+}
+
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+
+@keyframes scanLine {
+
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+
+}
+
+
+@keyframes bottomPulse {
+
+    0%,
+    100% {
+        width: 25%;
+        opacity: 0.5;
+    }
+
+    50% {
+        width: 75%;
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes labelGlow {
+
+    0%,
+    100% {
+        opacity: 0.75;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes dotPulse {
+
+    0%,
+    100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: scale(1.3);
+        opacity: 1;
+    }
+
+}
+
+
+@keyframes nameBoxIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 600px) {
+
+    .name-input-box {
+        padding: 15px;
+        margin-top: 16px;
+        border-radius: 14px;
+    }
+
+    .name-input-box input {
+        height: 47px;
+        font-size: 13px;
+    }
+
+}
