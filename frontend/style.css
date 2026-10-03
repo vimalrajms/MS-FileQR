@@ -721,3 +721,60 @@ footer {
         width: calc(100% - 20px);
     }
 }
+/* QR AREA */
+.qr-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+/* QR STYLE SELECTOR */
+.qr-style-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.qr-style-selector label {
+    color: #00ff9d;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.qr-style-selector select {
+    background: #080b0d;
+    color: #ffffff;
+    border: 1px solid #00ff9d;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 255, 157, 0.15);
+}
+
+.qr-style-selector select:focus {
+    box-shadow: 0 0 15px rgba(0, 255, 157, 0.35);
+}
+
+.qr-style-selector option {
+    background: #080b0d;
+    color: #ffffff;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .qr-style-selector {
+        width: 100%;
+    }
+
+    .qr-style-selector select {
+        flex: 1;
+        max-width: 180px;
+    }
+}

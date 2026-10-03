@@ -208,12 +208,26 @@
             <div class="result-content">
 
                 <!-- QR -->
-                <div class="qr-wrapper">
+                <!-- QR AREA -->
+<div class="qr-area">
 
-                    <div id="qrCode"></div>
+    <div class="qr-wrapper">
+        <div id="qrCode"></div>
+    </div>
 
-                </div>
+    <div class="qr-style-selector">
+        <label for="qrStyle">QR STYLE</label>
 
+        <select id="qrStyle">
+            <option value="square">Normal</option>
+            <option value="dots">Dot</option>
+            <option value="rounded">Rounded</option>
+            <option value="classy">Classy</option>
+            <option value="extra-rounded">Soft Rounded</option>
+        </select>
+    </div>
+
+</div>
 
                 <!-- RESULT INFO -->
                 <div class="result-info">
@@ -357,7 +371,7 @@
 
 
     <!-- QR LIBRARY -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.9.2/lib/qr-code-styling.js"></script>
 
 
     <!-- APP SCRIPT -->
